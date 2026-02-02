@@ -189,6 +189,48 @@ from src.domain.entities import Order
 | Constants | SCREAMING_SNAKE | `MAX_RETRIES` |
 | Booleans | is_, has_, can_ | `is_active` |
 
+### 7. YAGNI (You Aren't Gonna Need It)
+❌ **Bad:** 
+
+```python
+pythonclass User:
+    """User with features we might need someday."""
+    def __init__(self, name: str, email: str):
+        self.name = name
+        self.email = email
+        # Adding fields "just in case"
+        self.preferences = {}
+        self.settings = {}
+        self.metadata = {}
+        self.tags = []
+        self.custom_fields = {}
+        self.audit_log = []
+    
+    def add_preference(self, key: str, value: any):
+        """Might need this later."""
+        self.preferences[key] = value
+    
+    def add_tag(self, tag: str):
+        """Could be useful someday."""
+        self.tags.append(tag)
+    
+    def log_action(self, action: str):
+        """Future audit trail."""
+        self.audit_log.append({"action": action, "timestamp": datetime.now()})
+    
+    # 20 more methods for features we don't use yet...
+```
+✅ **Good:**
+```python
+pythonclass User:
+    """User with current required fields only."""
+    def __init__(self, name: str, email: str):
+        self.name = name
+        self.email = email
+    
+    def __repr__(self):
+        return f"User(name={self.name}, email={self.email})"
+```
 ---
 
 ## 📁 PROJECT STRUCTURE
